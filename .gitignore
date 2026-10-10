@@ -1,0 +1,196 @@
+# ============================================================
+#  .gitignore —— daily-quotes（Node/前端 + Python + Java/Spring Boot + Go）
+#  针对性版本：覆盖四栈常见产物、缓存、密钥与本地配置
+# ============================================================
+
+# ===== 系统文件 =====
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*~
+*.[oa]
+
+# ===== 编辑器 / IDE =====
+.vscode/
+.idea/
+*.iml
+.vs/
+.zed/
+*.code-workspace
+.project
+.classpath
+.settings/
+
+# ============================================================
+#  Node.js / 前端（React / Vue）
+# ============================================================
+# 依赖
+node_modules/
+jspm_packages/
+.bower/
+bower_components/
+# 构建产物
+dist/
+build/
+coverage/
+.next/
+.nuxt/
+.output/
+.vite/
+esbuild.out
+*.tsbuildinfo
+# 测试 / 工具缓存
+.cache/
+.temp/
+cypress/videos/
+cypress/screenshots/
+playwright-report/
+test-results/
+.storybook-static/
+# 本地开发配置
+.env
+.env.*
+!.env.example
+!.env.development.example
+!.env.production.example
+# 日志
+npm-debug.log*
+yarn-error.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+# 说明：package-lock.json / yarn.lock / pnpm-lock.yaml 应提交，勿忽略
+
+# ============================================================
+#  Python
+# ============================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyd
+# 虚拟环境
+.venv/
+venv/
+env/
+ENV/
+.eggs/
+*.egg-info/
+dist/
+build/
+.eggs/
+# 测试与静态检查缓存
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+.hypothesis/
+# 分析 / 数据 / 工具
+.ipynb_checkpoints/
+mlruns/
+.dvc/
+*.prof
+# 环境变量
+.env
+.env.*
+!.env.example
+
+# ============================================================
+#  Java / Spring Boot / Kotlin
+# ============================================================
+target/
+build/
+out/
+*.class
+*.war
+*.ear
+*.nar
+hs_err_pid*
+# Maven / Gradle 缓存
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+.mvn/
+# IDE 生成
+.idea/
+*.iml
+# 本地配置（含密钥，勿提交）
+application-local.yml
+application-local.yaml
+application-dev.yml
+application-dev.yaml
+*.pem
+*.key
+*.jks
+*.p12
+# Spring Boot 运行日志
+logs/
+*.log
+*.log.*
+
+# ============================================================
+#  Go
+# ============================================================
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+*.prof
+bin/
+coverage.out
+vendor/
+# 说明：如项目需要提交 vendor/（离线依赖），请删除本行
+
+# ===== 日志 / 临时文件 =====
+*.log
+*.err
+*.tmp
+*.temp
+logs/
+tmp/
+temp/
+debug/
+
+# ===== 环境与密钥（重要，别泄露）=====
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+secrets/
+config/credentials.yml
+credentials.json
+
+# ===== 压缩包 / 上传物 =====
+*.zip
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+*.jar
+# 说明：*.jar 已在此忽略；如需提交本地依赖 jar 请调整
+
+# ===== 数据库 / 本地数据 =====
+*.sqlite3
+*.db
+*.db-journal
+data/
+uploads/
+static/uploads/
+
+# ===== 其他常见 =====
+.DS_Store
+Thumbs.db
+*.orig
+*.rej
+.idea/
+.vscode/
