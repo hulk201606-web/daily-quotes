@@ -124,6 +124,8 @@ application-local.yml
 application-local.yaml
 application-dev.yml
 application-dev.yaml
+# 真实配置文件（含密钥/密码）：本地保留、严禁入库；改用 application.yml.example 模板
+application.yml
 *.pem
 *.key
 *.jks

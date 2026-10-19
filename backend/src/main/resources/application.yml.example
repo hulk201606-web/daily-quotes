@@ -1,0 +1,117 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: daily-quotes
+  # 默认启用 MySQL 数据源（如仍想本地无依赖启动，可加 --spring.profiles.active=h2）
+  # 本地密钥/覆盖请放 application-local.yml（已 gitignore，不会入库）
+  profiles:
+    active: mysql,local
+  encoding:
+    charset: UTF-8
+  jackson:
+    time-zone: Asia/Shanghai
+    default-property-inclusion: non_null
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  type-aliases-package: com.example.dailyquotes.domain
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+      table-underline: true
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+app:
+  cors:
+    allowed-origins: http://localhost:5173
+  quote-fetch:
+    enabled: true
+    cron: "0 30 6 * * *"
+    zone: Asia/Shanghai
+    url: https://dummyjson.com/quotes/random/{limit}
+    daily-limit: 30
+    max-page-size: 10
+    translate-enabled: true
+
+  translation:
+    url: https://api.mymemory.translated.net/get
+    source-lang: en
+    target-lang: zh-CN
+    interval-ms: 350
+    max-consecutive-failures: 20
+
+  # 中文名人名言来源：离线精选集 + 在线多源
+  chinese-quotes:
+    resource: data/chinese-quotes.json
+    online-enabled: true
+    online-limit: 30
+    online-max-rounds: 10
+    # 免 key 源开关
+    hitokoto-enabled: true
+    qhsou-enabled: true
+    keguan-enabled: true
+    # 需 key/token 的源（优先调用）：在 application-local.yml 中填写真实值，不要写进本文件
+    alapi-token: "YOUR_ALAPI_TOKEN"
+    tianapi-key: "YOUR_TIANIAPI_KEY"
+    showapi-key: "YOUR_SHOWAPI_KEY"
+    apihz-id: "YOUR_APIHZ_ID"
+    apihz-key: "YOUR_APIHZ_KEY"
+
+---
+# 默认 / H2 内嵌库：开箱即用，本地开发无需安装数据库
+spring:
+  config:
+    activate:
+      on-profile: h2
+  datasource:
+    url: jdbc:h2:file:./data/daily-quotes;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema-h2.sql
+  h2:
+    console:
+      enabled: true
+
+---
+# MySQL：默认数据源；真实账号密码放在 application-local.yml
+spring:
+  config:
+    activate:
+      on-profile: mysql
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/daily_quotes?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: YOUR_MYSQL_PASSWORD
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema-mysql.sql
+      continue-on-error: true
+
+---
+# PostgreSQL：通过 --spring.profiles.active=pgsql 启用
+spring:
+  config:
+    activate:
+      on-profile: pgsql
+  datasource:
+    url: jdbc:postgresql://localhost:5432/daily_quotes?serverTimezone=Asia/Shanghai
+    driver-class-name: org.postgresql.Driver
+    username: daily_quotes
+    password: YOUR_PG_PASSWORD
